@@ -40,7 +40,7 @@ You just need to download or clone the project to use it. Just ensure that you a
 Main_Zootherapie.m - Main file, used to load CSV files exported from Physilog RTK (GaitUp, Switzerland) and compute basic accelerometer-based parameters for lower and upper limbs. Make comparison between two conditions (2 different CSV files).
 
 ## Dependencies
-* No specific toolbox is required.
+* GaitUp Physilog Matlab ToolKit (https://gaitup.com/support/).
 
 ## Developer
 The proposed routine has been developed by <a href="https://www.unige.ch/medecine/kinesiology/people/florentm/" target="_blank">Florent Moissenet (PhD)</a>, K-Lab, University of Geneva.

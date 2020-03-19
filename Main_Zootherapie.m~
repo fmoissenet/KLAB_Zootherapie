@@ -318,7 +318,7 @@ for icondition = 1:size(files,1)
         for t = 1:size(accAveraged,1)
             [value(t),axis(t)] = min(abs(abs(accAveraged(t,:))-9.81));
         end
-        accArm = accAveraged(:,mode(axis));
+        accArm     = accAveraged(:,mode(axis));
         
         % Compute the % of time of activity were main axis acceleration 
         % have less than 1 m.s-1 difference with gravity acceleration
@@ -345,22 +345,15 @@ for icondition = 1:size(files,1)
     
         % Quantity of activity
         if icondition == 1
-            xlswrite([subjectID,'.xlsx'],quantityActAveraged,'Donn�es','B30');
-            xlswrite([subjectID,'.xlsx'],quantityActAveragedSum,'Donn�es','B31');
-            xlswrite([subjectID,'.xlsx'],quantityActAveragedMean,'Donn�es','B32');
-            xlswrite([subjectID,'.xlsx'],durationActAveragedMax,'Donn�es','B33');
+            xlswrite([subjectID,'.xlsx'],quantityActAveraged,'Donn�es','B2');
+            xlswrite([subjectID,'.xlsx'],quantityActAveragedSum,'Donn�es','B3');
+            xlswrite([subjectID,'.xlsx'],quantityActAveragedMean,'Donn�es','B4');
+            xlswrite([subjectID,'.xlsx'],durationActAveragedMax,'Donn�es','B5');
         elseif icondition == 2
-            xlswrite([subjectID,'.xlsx'],quantityActAveraged,'Donn�es','B34');
-            xlswrite([subjectID,'.xlsx'],quantityActAveragedSum,'Donn�es','B35');
-            xlswrite([subjectID,'.xlsx'],quantityActAveragedMean,'Donn�es','B36');
-            xlswrite([subjectID,'.xlsx'],durationActAveragedMax,'Donn�es','B37');
-        end
-        
-        % Type of posture
-        if icondition == 1
-            xlswrite([subjectID,'.xlsx'],durationActArmVertical,'Donn�es','B41');
-        elseif icondition == 2
-            xlswrite([subjectID,'.xlsx'],durationActArmVertical,'Donn�es','B42');
+            xlswrite([subjectID,'.xlsx'],quantityActAveraged,'Donn�es','B6');
+            xlswrite([subjectID,'.xlsx'],quantityActAveragedSum,'Donn�es','B7');
+            xlswrite([subjectID,'.xlsx'],quantityActAveragedMean,'Donn�es','B8');
+            xlswrite([subjectID,'.xlsx'],durationActAveragedMax,'Donn�es','B9');
         end
         
     end
