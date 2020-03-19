@@ -24,18 +24,21 @@ close all;
 clc;
 
 % -------------------------------------------------------------------------
-% EXTRACT DATA
+% TOOLBOX FOLDERS
 % -------------------------------------------------------------------------
-% Set files and folders
-toolboxFolder = 'C:\Users\moissene\Documents\Professionnel\projets recherche\2020 - ZOOTHERAPIE\Données tests';
-dataFolder    = 'C:\Users\moissene\Documents\Professionnel\projets recherche\2020 - ZOOTHERAPIE\Données tests\ZOOTHERAPIE_002';
+dependenciesFolder = '/home/chloups/Bureau/GIT/ZOOTHERAPIE/dependencies/Physilog5MatlabToolKit_v1_5_0';
+toolboxFolder      = '/home/chloups/Bureau/GIT/ZOOTHERAPIE';
+addpath(dependenciesFolder);
 addpath(toolboxFolder);
-cd(dataFolder);
-files         = dir('*.csv');
-template      = 'ZOOTHERAPIE_modele.xlsx';
+template           = 'ZOOTHERAPIE_modele.xlsx';
 
-% Subject
-subjectID = 'ZOOTHERAPIE_002';
+% -------------------------------------------------------------------------
+% EXTRACT SUBJECT DATA
+% -------------------------------------------------------------------------
+subjectID          = 'ZOOTHERAPIE_001';
+dataFolder         = ['/home/chloups/Bureau/GIT/ZOOTHERAPIE/data/',subjectID];
+cd(dataFolder);
+files              = dir('*.BIN'); % all bin files must be in the subject folder and renamed with the measurement date and file number (e.g. 19_12_19_001.BIN)
 
 for icondition = 1:size(files,1)
     
@@ -44,22 +47,14 @@ for icondition = 1:size(files,1)
     cd(dataFolder);
     
     % Read files
-    fileID = fopen(files(icondition).name,'r'); fgetl(fileID); 
-    temp1 = fscanf(fileID,'Created on: %10c');
-    fgetl(fileID);
-    temp2 = fscanf(fileID,'Total data points: %d');
-    fgetl(fileID);
-    fgetl(fileID);
-    temp3 = fgetl(fileID);
-    
-    % Extract data
-    date     = temp1;
-    n        = temp2;
-    f        = str2num(temp3(31+7:31+9));
-    time     = dlmread(files(icondition).name,',',[8 0 n+8-2 0]);      % s
-    acc(:,1) = dlmread(files(icondition).name,',',[8 4 n+8-2 4])*9.81; % m.s-2
-    acc(:,2) = dlmread(files(icondition).name,',',[8 5 n+8-2 5])*9.81; % m.s-2
-    acc(:,3) = dlmread(files(icondition).name,',',[8 6 n+8-2 6])*9.81; % m.s-2
+    [sensorData, header] = rawP5reader(files(icondition).name,'3Dangle','sync');
+    date     = [header.startDate.Year,'-',header.startDate.Month,'-',header.startDate.Day]; % YYYY-MM-DD
+    n        = size(sensorData(1).data(:,1),1);
+    f        = sensorData(1).Fs;                                                            % Hz
+    time     = sensorData(1).timestamps;                                                    % s
+    acc(:,1) = sensorData(1).data(:,1)*9.81;                                                % m.s-2
+    acc(:,2) = sensorData(1).data(:,2)*9.81;                                                % m.s-2
+    acc(:,3) = sensorData(1).data(:,3)*9.81;                                                % m.s-2
     
     % ---------------------------------------------------------------------
     % COMPUTE THE QUANTITY OF ACTIVITY
@@ -184,68 +179,68 @@ for icondition = 1:size(files,1)
 
     % Quantity of activity
     if icondition == 1
-        xlswrite([subjectID,'.xlsx'],quantityActAveraged,'Données','B2');
-        xlswrite([subjectID,'.xlsx'],quantityActAveragedSum,'Données','B3');
-        xlswrite([subjectID,'.xlsx'],quantityActAveragedMean,'Données','B4');
-        xlswrite([subjectID,'.xlsx'],durationActAveragedMax,'Données','B5');
+        xlswrite([subjectID,'.xlsx'],quantityActAveraged,'Donnï¿½es','B2');
+        xlswrite([subjectID,'.xlsx'],quantityActAveragedSum,'Donnï¿½es','B3');
+        xlswrite([subjectID,'.xlsx'],quantityActAveragedMean,'Donnï¿½es','B4');
+        xlswrite([subjectID,'.xlsx'],durationActAveragedMax,'Donnï¿½es','B5');
     elseif icondition == 2
-        xlswrite([subjectID,'.xlsx'],quantityActAveraged,'Données','B6');
-        xlswrite([subjectID,'.xlsx'],quantityActAveragedSum,'Données','B7');
-        xlswrite([subjectID,'.xlsx'],quantityActAveragedMean,'Données','B8');
-        xlswrite([subjectID,'.xlsx'],durationActAveragedMax,'Données','B9');
+        xlswrite([subjectID,'.xlsx'],quantityActAveraged,'Donnï¿½es','B6');
+        xlswrite([subjectID,'.xlsx'],quantityActAveragedSum,'Donnï¿½es','B7');
+        xlswrite([subjectID,'.xlsx'],quantityActAveragedMean,'Donnï¿½es','B8');
+        xlswrite([subjectID,'.xlsx'],durationActAveragedMax,'Donnï¿½es','B9');
     end
 
     % Type of activity
     if icondition == 1
         if axisCalib1 == 1
-            xlswrite([subjectID,'.xlsx'],axisDuration(1)/60,'Données','B16');
+            xlswrite([subjectID,'.xlsx'],axisDuration(1)/60,'Donnï¿½es','B16');
         elseif axisCalib1 == 2
-            xlswrite([subjectID,'.xlsx'],axisDuration(2)/60,'Données','B16');
+            xlswrite([subjectID,'.xlsx'],axisDuration(2)/60,'Donnï¿½es','B16');
         elseif axisCalib1 == 3
-            xlswrite([subjectID,'.xlsx'],axisDuration(3)/60,'Données','B16');
+            xlswrite([subjectID,'.xlsx'],axisDuration(3)/60,'Donnï¿½es','B16');
         end
         if axisCalib2 == 1
-            xlswrite([subjectID,'.xlsx'],axisDuration(1)/60,'Données','B15');
+            xlswrite([subjectID,'.xlsx'],axisDuration(1)/60,'Donnï¿½es','B15');
         elseif axisCalib2 == 2
-            xlswrite([subjectID,'.xlsx'],axisDuration(2)/60,'Données','B15');
+            xlswrite([subjectID,'.xlsx'],axisDuration(2)/60,'Donnï¿½es','B15');
         elseif axisCalib2 == 3
-            xlswrite([subjectID,'.xlsx'],axisDuration(3)/60,'Données','B15');
+            xlswrite([subjectID,'.xlsx'],axisDuration(3)/60,'Donnï¿½es','B15');
         end
         temp                   = axis;
         temp(temp~=axisCalib1) = NaN;
         temp(temp==axisCalib1) = 1;
-        xlswrite([subjectID,'.xlsx'],temp,'Données','B14');
+        xlswrite([subjectID,'.xlsx'],temp,'Donnï¿½es','B14');
         temp                   = axis;
         temp(temp~=axisCalib2) = NaN;
         temp(temp==axisCalib2) = 1;
-        xlswrite([subjectID,'.xlsx'],temp,'Données','B13');
-        xlswrite([subjectID,'.xlsx'],nSst,'Données','B18');
-        xlswrite([subjectID,'.xlsx'],nSts,'Données','B19');
+        xlswrite([subjectID,'.xlsx'],temp,'Donnï¿½es','B13');
+        xlswrite([subjectID,'.xlsx'],nSst,'Donnï¿½es','B18');
+        xlswrite([subjectID,'.xlsx'],nSts,'Donnï¿½es','B19');
     elseif icondition == 2
         if axisCalib1 == 1
-            xlswrite([subjectID,'.xlsx'],axisDuration(1)/60,'Données','B23');
+            xlswrite([subjectID,'.xlsx'],axisDuration(1)/60,'Donnï¿½es','B23');
         elseif axisCalib1 == 2
-            xlswrite([subjectID,'.xlsx'],axisDuration(2)/60,'Données','B23');
+            xlswrite([subjectID,'.xlsx'],axisDuration(2)/60,'Donnï¿½es','B23');
         elseif axisCalib1 == 3
-            xlswrite([subjectID,'.xlsx'],axisDuration(3)/60,'Données','B23');
+            xlswrite([subjectID,'.xlsx'],axisDuration(3)/60,'Donnï¿½es','B23');
         end
         if axisCalib2 == 1
-            xlswrite([subjectID,'.xlsx'],axisDuration(1)/60,'Données','B22');
+            xlswrite([subjectID,'.xlsx'],axisDuration(1)/60,'Donnï¿½es','B22');
         elseif axisCalib2 == 2
-            xlswrite([subjectID,'.xlsx'],axisDuration(2)/60,'Données','B22');
+            xlswrite([subjectID,'.xlsx'],axisDuration(2)/60,'Donnï¿½es','B22');
         elseif axisCalib2 == 3
-            xlswrite([subjectID,'.xlsx'],axisDuration(3)/60,'Données','B22');
+            xlswrite([subjectID,'.xlsx'],axisDuration(3)/60,'Donnï¿½es','B22');
         end
         temp                   = axis;
         temp(temp~=axisCalib1) = NaN;
         temp(temp==axisCalib1) = 1;
-        xlswrite([subjectID,'.xlsx'],temp,'Données','B21');
+        xlswrite([subjectID,'.xlsx'],temp,'Donnï¿½es','B21');
         temp                   = axis;
         temp(temp~=axisCalib2) = NaN;
         temp(temp==axisCalib2) = 1;
-        xlswrite([subjectID,'.xlsx'],temp,'Données','B20');
-        xlswrite([subjectID,'.xlsx'],nSst,'Données','B25');
-        xlswrite([subjectID,'.xlsx'],nSts,'Données','B26');
+        xlswrite([subjectID,'.xlsx'],temp,'Donnï¿½es','B20');
+        xlswrite([subjectID,'.xlsx'],nSst,'Donnï¿½es','B25');
+        xlswrite([subjectID,'.xlsx'],nSts,'Donnï¿½es','B26');
     end
     
 end
