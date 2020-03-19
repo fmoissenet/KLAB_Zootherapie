@@ -151,96 +151,96 @@ for icondition = 1:size(files,1)
         end
     end
 
-    % ---------------------------------------------------------------------
-    % EXPORT RESULTS
-    % --------------------------------------------------------------------- 
-    cd(toolboxFolder);
-    % Create file
-    if ~isfile([subjectID,'.xlsx'])
-        system(['copy ',template,' ',subjectID,'.xlsx']);
-    else
-        disp('Subject file already exists !')
-    end
-
-    % Subject and conditions
-    xlswrite([subjectID,'.xlsx'],cellstr(subjectID),'Rapport','B2');
-    if icondition == 1
-        xlswrite([subjectID,'.xlsx'],cellstr(date),'Rapport','B3');
-    elseif icondition == 2
-        xlswrite([subjectID,'.xlsx'],cellstr(date),'Rapport','B4');
-    end
-
-    % Session duration
-    if icondition == 1
-        xlswrite([subjectID,'.xlsx'],size(acc,1)/f/60,'Rapport','B7');
-    elseif icondition == 2
-        xlswrite([subjectID,'.xlsx'],size(acc,1)/f/60,'Rapport','E7');
-    end
-
-    % Quantity of activity
-    if icondition == 1
-        xlswrite([subjectID,'.xlsx'],quantityActAveraged,'Donn�es','B2');
-        xlswrite([subjectID,'.xlsx'],quantityActAveragedSum,'Donn�es','B3');
-        xlswrite([subjectID,'.xlsx'],quantityActAveragedMean,'Donn�es','B4');
-        xlswrite([subjectID,'.xlsx'],durationActAveragedMax,'Donn�es','B5');
-    elseif icondition == 2
-        xlswrite([subjectID,'.xlsx'],quantityActAveraged,'Donn�es','B6');
-        xlswrite([subjectID,'.xlsx'],quantityActAveragedSum,'Donn�es','B7');
-        xlswrite([subjectID,'.xlsx'],quantityActAveragedMean,'Donn�es','B8');
-        xlswrite([subjectID,'.xlsx'],durationActAveragedMax,'Donn�es','B9');
-    end
-
-    % Type of activity
-    if icondition == 1
-        if axisCalib1 == 1
-            xlswrite([subjectID,'.xlsx'],axisDuration(1)/60,'Donn�es','B16');
-        elseif axisCalib1 == 2
-            xlswrite([subjectID,'.xlsx'],axisDuration(2)/60,'Donn�es','B16');
-        elseif axisCalib1 == 3
-            xlswrite([subjectID,'.xlsx'],axisDuration(3)/60,'Donn�es','B16');
-        end
-        if axisCalib2 == 1
-            xlswrite([subjectID,'.xlsx'],axisDuration(1)/60,'Donn�es','B15');
-        elseif axisCalib2 == 2
-            xlswrite([subjectID,'.xlsx'],axisDuration(2)/60,'Donn�es','B15');
-        elseif axisCalib2 == 3
-            xlswrite([subjectID,'.xlsx'],axisDuration(3)/60,'Donn�es','B15');
-        end
-        temp                   = axis;
-        temp(temp~=axisCalib1) = NaN;
-        temp(temp==axisCalib1) = 1;
-        xlswrite([subjectID,'.xlsx'],temp,'Donn�es','B14');
-        temp                   = axis;
-        temp(temp~=axisCalib2) = NaN;
-        temp(temp==axisCalib2) = 1;
-        xlswrite([subjectID,'.xlsx'],temp,'Donn�es','B13');
-        xlswrite([subjectID,'.xlsx'],nSst,'Donn�es','B18');
-        xlswrite([subjectID,'.xlsx'],nSts,'Donn�es','B19');
-    elseif icondition == 2
-        if axisCalib1 == 1
-            xlswrite([subjectID,'.xlsx'],axisDuration(1)/60,'Donn�es','B23');
-        elseif axisCalib1 == 2
-            xlswrite([subjectID,'.xlsx'],axisDuration(2)/60,'Donn�es','B23');
-        elseif axisCalib1 == 3
-            xlswrite([subjectID,'.xlsx'],axisDuration(3)/60,'Donn�es','B23');
-        end
-        if axisCalib2 == 1
-            xlswrite([subjectID,'.xlsx'],axisDuration(1)/60,'Donn�es','B22');
-        elseif axisCalib2 == 2
-            xlswrite([subjectID,'.xlsx'],axisDuration(2)/60,'Donn�es','B22');
-        elseif axisCalib2 == 3
-            xlswrite([subjectID,'.xlsx'],axisDuration(3)/60,'Donn�es','B22');
-        end
-        temp                   = axis;
-        temp(temp~=axisCalib1) = NaN;
-        temp(temp==axisCalib1) = 1;
-        xlswrite([subjectID,'.xlsx'],temp,'Donn�es','B21');
-        temp                   = axis;
-        temp(temp~=axisCalib2) = NaN;
-        temp(temp==axisCalib2) = 1;
-        xlswrite([subjectID,'.xlsx'],temp,'Donn�es','B20');
-        xlswrite([subjectID,'.xlsx'],nSst,'Donn�es','B25');
-        xlswrite([subjectID,'.xlsx'],nSts,'Donn�es','B26');
-    end
+%     % ---------------------------------------------------------------------
+%     % EXPORT RESULTS
+%     % --------------------------------------------------------------------- 
+%     cd(toolboxFolder);
+%     % Create file
+%     if ~isfile([subjectID,'.xlsx'])
+%         system(['copy ',template,' ',subjectID,'.xlsx']);
+%     else
+%         disp('Subject file already exists !')
+%     end
+% 
+%     % Subject and conditions
+%     xlswrite([subjectID,'.xlsx'],cellstr(subjectID),'Rapport','B2');
+%     if icondition == 1
+%         xlswrite([subjectID,'.xlsx'],cellstr(date),'Rapport','B3');
+%     elseif icondition == 2
+%         xlswrite([subjectID,'.xlsx'],cellstr(date),'Rapport','B4');
+%     end
+% 
+%     % Session duration
+%     if icondition == 1
+%         xlswrite([subjectID,'.xlsx'],size(acc,1)/f/60,'Rapport','B7');
+%     elseif icondition == 2
+%         xlswrite([subjectID,'.xlsx'],size(acc,1)/f/60,'Rapport','E7');
+%     end
+% 
+%     % Quantity of activity
+%     if icondition == 1
+%         xlswrite([subjectID,'.xlsx'],quantityActAveraged,'Donn�es','B2');
+%         xlswrite([subjectID,'.xlsx'],quantityActAveragedSum,'Donn�es','B3');
+%         xlswrite([subjectID,'.xlsx'],quantityActAveragedMean,'Donn�es','B4');
+%         xlswrite([subjectID,'.xlsx'],durationActAveragedMax,'Donn�es','B5');
+%     elseif icondition == 2
+%         xlswrite([subjectID,'.xlsx'],quantityActAveraged,'Donn�es','B6');
+%         xlswrite([subjectID,'.xlsx'],quantityActAveragedSum,'Donn�es','B7');
+%         xlswrite([subjectID,'.xlsx'],quantityActAveragedMean,'Donn�es','B8');
+%         xlswrite([subjectID,'.xlsx'],durationActAveragedMax,'Donn�es','B9');
+%     end
+% 
+%     % Type of activity
+%     if icondition == 1
+%         if axisCalib1 == 1
+%             xlswrite([subjectID,'.xlsx'],axisDuration(1)/60,'Donn�es','B16');
+%         elseif axisCalib1 == 2
+%             xlswrite([subjectID,'.xlsx'],axisDuration(2)/60,'Donn�es','B16');
+%         elseif axisCalib1 == 3
+%             xlswrite([subjectID,'.xlsx'],axisDuration(3)/60,'Donn�es','B16');
+%         end
+%         if axisCalib2 == 1
+%             xlswrite([subjectID,'.xlsx'],axisDuration(1)/60,'Donn�es','B15');
+%         elseif axisCalib2 == 2
+%             xlswrite([subjectID,'.xlsx'],axisDuration(2)/60,'Donn�es','B15');
+%         elseif axisCalib2 == 3
+%             xlswrite([subjectID,'.xlsx'],axisDuration(3)/60,'Donn�es','B15');
+%         end
+%         temp                   = axis;
+%         temp(temp~=axisCalib1) = NaN;
+%         temp(temp==axisCalib1) = 1;
+%         xlswrite([subjectID,'.xlsx'],temp,'Donn�es','B14');
+%         temp                   = axis;
+%         temp(temp~=axisCalib2) = NaN;
+%         temp(temp==axisCalib2) = 1;
+%         xlswrite([subjectID,'.xlsx'],temp,'Donn�es','B13');
+%         xlswrite([subjectID,'.xlsx'],nSst,'Donn�es','B18');
+%         xlswrite([subjectID,'.xlsx'],nSts,'Donn�es','B19');
+%     elseif icondition == 2
+%         if axisCalib1 == 1
+%             xlswrite([subjectID,'.xlsx'],axisDuration(1)/60,'Donn�es','B23');
+%         elseif axisCalib1 == 2
+%             xlswrite([subjectID,'.xlsx'],axisDuration(2)/60,'Donn�es','B23');
+%         elseif axisCalib1 == 3
+%             xlswrite([subjectID,'.xlsx'],axisDuration(3)/60,'Donn�es','B23');
+%         end
+%         if axisCalib2 == 1
+%             xlswrite([subjectID,'.xlsx'],axisDuration(1)/60,'Donn�es','B22');
+%         elseif axisCalib2 == 2
+%             xlswrite([subjectID,'.xlsx'],axisDuration(2)/60,'Donn�es','B22');
+%         elseif axisCalib2 == 3
+%             xlswrite([subjectID,'.xlsx'],axisDuration(3)/60,'Donn�es','B22');
+%         end
+%         temp                   = axis;
+%         temp(temp~=axisCalib1) = NaN;
+%         temp(temp==axisCalib1) = 1;
+%         xlswrite([subjectID,'.xlsx'],temp,'Donn�es','B21');
+%         temp                   = axis;
+%         temp(temp~=axisCalib2) = NaN;
+%         temp(temp==axisCalib2) = 1;
+%         xlswrite([subjectID,'.xlsx'],temp,'Donn�es','B20');
+%         xlswrite([subjectID,'.xlsx'],nSst,'Donn�es','B25');
+%         xlswrite([subjectID,'.xlsx'],nSts,'Donn�es','B26');
+%     end
     
 end
